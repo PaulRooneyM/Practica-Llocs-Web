@@ -1,0 +1,12 @@
+<form [formGroup]="signupForm" (submit)="onSubmit()">
+  <label for="username">Username</label>
+  <input type="text" id="username1"  required
+    formControlName="username"
+  >
+
+  <label for="password">Password</label>
+  <input type="password" id="password1" required
+    formControlName="password"
+  >
+  <button type="submit">Signup</button>
+</form>

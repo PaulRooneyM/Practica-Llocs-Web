@@ -1,0 +1,21 @@
+app-login, app-signup, app-logout, app-currentuser {
+  width: 100%;
+  display: block;
+}
+
+app-login {
+  margin-bottom: 15px;
+}
+
+app-signup {
+  margin-bottom: 15px;
+}
+
+app-logout {
+  margin-top: 15px;
+  text-align: center;
+}
+
+app-currentuser {
+  margin-bottom: 15px;
+}

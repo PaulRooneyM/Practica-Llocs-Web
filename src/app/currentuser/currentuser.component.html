@@ -1,0 +1,6 @@
+<div *ngIf="userId" class="user-info-container">
+  <p>Username: {{ userName }}</p>
+</div>
+<div *ngIf="!userId" class="user-info-container-no-user-info">
+  <p>No user is currently logged in.</p>
+</div>

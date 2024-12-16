@@ -1,1 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
+:host {
+  font-family: Arial, Courier, monospace;
+  background-color: rgb(232, 232, 232);
+  color: #131313;
+}

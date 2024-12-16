@@ -1,0 +1,35 @@
+<form (submit)="onSubmit($event)">
+  <label for="transactionType">Tipo de Transacció</label>
+  <select id="transactionType" #transactionType>
+      <option value="deposit">Depositar</option>
+      <option value="withdraw">Retirar</option>
+  </select>
+
+  <label for="amount">Quantitat</label>
+  <input type="number" id="amount" #amount required min="1">
+
+  <button type="submit">Submit</button>
+</form>
+
+<div>
+  <h3>Net worth total(en EUR): <strong>{{ totalNetWorth }} €</strong></h3>
+</div>
+
+<div>
+  <h3>Saldo Fiat: <strong>{{ balance }} €</strong></h3>
+</div>
+
+<div>
+  <h3>Saldo Bitcoin(en EUR): <strong>{{ userBitcoinValue }} €</strong></h3>
+</div>
+
+
+<div>
+  <h3>Saldo Ethereum(en EUR): <strong>{{ userEthereumValue }} €</strong></h3>
+</div>
+
+<div>
+  <h3>Saldo Litecoin(en EUR): <strong>{{ userLitecoinValue }} €</strong></h3>
+</div>
+
+

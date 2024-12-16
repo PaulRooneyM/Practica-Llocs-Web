@@ -1,0 +1,26 @@
+<div class="container">
+  <h2>Vendre Bitcoin</h2>
+
+  <div class="balance">
+    <p>Saldo actual bitcoin: <strong>{{ bitcoinAmount }} BTC</strong></p>
+  </div>
+
+  <div class="bitcoinValue">
+    <p>Preu actual Bitcoin: <strong>{{ bitcoinPrice }} €</strong></p>
+  </div>
+
+  <div class="sell-section">
+    <label for="amount">Quantitat a vendre (en BTC):</label>
+    <input
+      type="number"
+      id="amount"
+      [(ngModel)]="amountToSell"
+      [min]="1"
+      [max]="bitcoinAmount"
+      placeholder="Quantitat en BTC"
+      required />
+    <button (click)="sellBitcoin()" [disabled]="amountToSell <= 0 || amountToSell > bitcoinAmount">
+      Vendre Bitcoin
+    </button>
+  </div>
+</div>

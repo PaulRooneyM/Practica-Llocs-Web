@@ -1,0 +1,12 @@
+<form [formGroup]="loginForm" (submit)="onSubmit()">
+  <label for="username">Username</label>
+  <input type="username" id="username"  required
+    formControlName="username"
+  >
+
+  <label for="password">Password</label>
+  <input type="password" id="password" required
+    formControlName="password"
+  >
+  <button type="submit">Login</button>
+</form>

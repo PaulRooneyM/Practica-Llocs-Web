@@ -1,0 +1,23 @@
+button[type="button"], button[type="submit"] {
+  max-width: 400px;
+  padding: 12px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  display: block;
+  margin: 0 auto;
+  border-radius: 5px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button[type="button"]:hover, button[type="submit"]:hover {
+  background-color: #e53935;
+}
+
+
+button[type="button"]:focus, button[type="submit"]:focus {
+  outline: none;
+  box-shadow: 0 0 3px 2px rgba(244, 67, 54, 0.5);
+}

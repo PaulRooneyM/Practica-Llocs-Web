@@ -1,0 +1,18 @@
+<body>
+  <div class="container">
+    <header>
+      <h1>Últimes Notícies del Món de les Criptomonedes</h1>
+    </header>
+
+    <section>
+      <p>Manten-te informat sobre els canvis i esdeveniments més recents del món de les criptomonedes per aprofitar les oportunitats d'inversió i conèixer les novetats més importants. Aquí tens algunes de les últimes notícies:</p>
+
+      <ul>
+        <li *ngFor="let newsItem of news">
+          <p class="news-title">{{ newsItem.title }}</p>
+          <p class="news-details">{{ newsItem.body }}</p>
+        </li>
+      </ul>
+    </section>
+  </div>
+</body>
