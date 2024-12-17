@@ -14,21 +14,21 @@ export const routes: Routes = [
   {
     path:'monedes',
     component: MonedesComponent,
-    title: '/monedes'
+    title: 'Monedes'
   },
   {
     path:'ultimesnoticies',
     component: NewsComponent,
-    title: '/ultimesnoticies'
+    title: 'Ultimesnoticies'
   },
   {
     path:'compte',
     component: AccountComponent,
-    title: '/compte'
+    title: 'Compte'
   },
   {
     path:'cartera',
     component: WalletComponent,
-    title: '/cartera'
+    title: 'Cartera'
   }
 ];

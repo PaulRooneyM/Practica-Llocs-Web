@@ -53,4 +53,22 @@ button:hover:enabled {
   background-color: #45a049;
 }
 
+.transaction-success {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  text-align: center;
+}
 
+.transaction-success img {
+  width: 500px;
+  height: auto;
+}
+
+.error-message {
+  color: red;
+  font-weight: bold;
+  margin-top: 20px;
+}
