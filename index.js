@@ -9,6 +9,9 @@ import { coinModel } from './coins/coins.model.js';
 import { newsRouter } from './news/news.routes.js';
 import { news } from './news/news.model.js';
 import { newsModel } from './news/news.model.js';
+import { mediaRouter } from './media/media.routes.js';
+import { mediaModel, media } from './media/media.model.js';
+
 
 await mongoose.connect('mongodb://localhost:27017/myproject');
 
@@ -20,12 +23,13 @@ const port = 3000;
 
 app.use(bodyParser.json());
 
+// Rutes 
 app.use('/users', usersRouter);
-
 app.use('/coins', coinsRouter);
-
 app.use('/news', newsRouter);
+app.use('/media', mediaRouter);
 
+// Inicialitzar les notícies
 async function initializeNews() {
     for (const newsItem of news) {
         const existingNews = await newsModel.findOne({ number: newsItem.number }); 
@@ -44,6 +48,26 @@ async function initializeNews() {
 
 initializeNews();
 
+// Inicialitzar gifs
+async function initializeMedia() {
+    const existingMedia = await mediaModel.findOne({});
+
+    if (!existingMedia) {
+        try {
+            const newMedia = new mediaModel(media[0]); 
+            await newMedia.save();
+            console.log('Media created successfully');
+        } catch (err) {
+            console.error('Error creating media:', err);
+        }
+    } else {
+        console.log('Media already exists in the database');
+    }
+}
+
+initializeMedia();
+
+// Inicialitzar Bitcoin
 async function initializeBitcoin() {
     const bitcoin = await coinModel.findOne({ id: 'BTC' });
 
@@ -57,7 +81,7 @@ async function initializeBitcoin() {
     }
 }
 
-
+// Inicialitzar Ethereum
 async function initializeEthereum() {
     const ethereum = await coinModel.findOne({ id: 'ETH' });
 
@@ -71,6 +95,7 @@ async function initializeEthereum() {
     }
 }
 
+// Inicialitzar Litecoin
 async function initializeLitecoin() {
     const litecoin = await coinModel.findOne({ id: 'LTC' });
 
@@ -84,12 +109,11 @@ async function initializeLitecoin() {
     }
 }
 
-
 initializeBitcoin();
 initializeEthereum();
 initializeLitecoin();
 
-
+// Actualitzar el valor de Bitcoin
 async function updateBitcoinValue() {
     try {
         const randomValue = Math.random() * 10000;
@@ -102,6 +126,7 @@ async function updateBitcoinValue() {
     }
 }
 
+// Actualitzar el valor d'Ethereum
 async function updateEthereumValue() {
     try {
         const randomValue = Math.random() * 1000;
@@ -114,6 +139,7 @@ async function updateEthereumValue() {
     }
 }
 
+// Actualitzar el valor de Litecoin
 async function updateLitecoinValue() {
     try {
         const randomValue = Math.random() * 100; 
@@ -126,14 +152,12 @@ async function updateLitecoinValue() {
     }
 }
 
-
+// Actualitzar els valors de les monedes cada 10 segons
 setInterval(updateBitcoinValue, 10000);
 setInterval(updateEthereumValue, 10000);
 setInterval(updateLitecoinValue, 10000);
 
-
-
-
+// Iniciar el servidor
 app.listen(port, () => { 
     console.log(`Server is running on port ${port}`);
 });

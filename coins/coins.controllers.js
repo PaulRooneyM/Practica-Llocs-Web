@@ -1,11 +1,12 @@
 import { coinModel } from './coins.model.js';
 
-
+// Obtenir totes les monedes
 export async function handleGetCoins(req, res) {
     const coins = await coinModel.find({});
     res.json(coins);
 }
 
+// Obtenir el saldo d'una moneda per ID
 export async function handleGetCoinBalance(req, res) {
     const { id } = req.params;
 

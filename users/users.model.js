@@ -3,12 +3,12 @@ import { Schema, model} from 'mongoose';
 const userSchema = new Schema({
     username: {
         type: String,
-        required: [true, 'Username is required'], 
+        required: [true, "El nom d'usuari és obligatori"], 
         unique: true, 
     },
     password: {
         type: String,
-        required: [true, 'Password is required'], 
+        required: [true, 'La contrasenya és obligatòria'], 
     },
     balance: {
         type: Number,
