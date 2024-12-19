@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { NewsService } from "../services/news.service";
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { CurrentUserService } from '../services/currentuser.service';
+
 import  {WalletService} from '../services/wallet.service';
 @Component({
   selector: 'app-news',
@@ -25,7 +25,7 @@ export class NewsComponent {
   editNewsItem: any = null;
 
   private newsService = inject(NewsService);
-  private currentUserService = inject(CurrentUserService);
+
   private walletService = inject(WalletService);
   userId: string | null = null;
   private intervalId: any;

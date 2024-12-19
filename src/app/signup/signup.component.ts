@@ -36,7 +36,6 @@ export class SignupComponent {
         (response) => {
           console.log(response);
           alert("T'has registrat correctament!");
-          this.signupSuccess.emit(); // Emitir evento de éxito
         },
         (error) => {
           console.error('Signup failed:', error);
