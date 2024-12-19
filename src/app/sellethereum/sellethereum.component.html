@@ -22,4 +22,14 @@
     <button (click)="sellEthereum()" [disabled]="amountToSell <= 0 || amountToSell > ethereumAmount">
       Vendre Ethereum
     </button>
+
+
+    <div *ngIf="transactionSuccess" class="transaction-success">
+      <img [src]="imageURL" alt="Ethereum Sale Animation" />
+      <p class="success-message">Venta realitzada amb èxit!</p>
+    </div>
+
+    <div *ngIf="errorMessage" class="error-message">
+      <p>{{ errorMessage }}</p>
+    </div>
   </div>

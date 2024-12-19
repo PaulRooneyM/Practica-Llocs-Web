@@ -1,12 +1,17 @@
 <form [formGroup]="signupForm" (submit)="onSubmit()">
-  <label for="username">Username</label>
-  <input type="text" id="username1"  required
-    formControlName="username"
-  >
+  <div class="group" >
+    <input required="" type="text" class="input" formControlName="username">
+    <span class="highlight"></span>
+    <span class="bar"></span>
+    <label>Usuari</label>
+  </div>
 
-  <label for="password">Password</label>
-  <input type="password" id="password1" required
-    formControlName="password"
-  >
-  <button type="submit">Signup</button>
+  <div class="group">
+    <input required="" type="password" class="input" formControlName="password">
+    <span class="highlight"></span>
+    <span class="bar"></span>
+    <label>Contrasenya</label>
+  </div>
+
+  <button type="submit">Registrar-se</button>
 </form>

@@ -11,10 +11,11 @@ export class LogoutComponent {
 
   constructor() { }
 
+  // Manejar el cierre de sesión
   logout() {
     localStorage.removeItem('userId');
 
-    alert('Logged out successfully');
+    alert("S'ha tancat la sessió correctament");
     window.location.reload();
   }
 }

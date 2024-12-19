@@ -2,11 +2,13 @@ import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { WalletService } from '../services/wallet.service';
 import { CryptoWalletService } from '../services/cyrptowallet.service';
+import { MediaService } from '../services/media.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-sellethereum',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './sellethereum.component.html',
   styleUrl: './sellethereum.component.css'
 })
@@ -17,6 +19,7 @@ export class SellethereumComponent {
   ethereumAmount: number = 0;
   errorMessage: string = '';
   transactionSuccess: boolean = false;
+  imageURL: string = '';
 
 
   balance = 0;
@@ -25,12 +28,13 @@ export class SellethereumComponent {
 
   private walletService = inject(WalletService);
   private cryptoWalletService = inject(CryptoWalletService);
+  private mediaService = inject(MediaService);
 
   constructor() {}
 
   ngOnInit() {
     this.userId = localStorage.getItem('userId');
-
+    this.fetchImage();
     if (this.userId) {
       this.intervalId = setInterval(() => {
         this.fetchBalance();
@@ -104,6 +108,10 @@ export class SellethereumComponent {
         next: (response) => {
           this.transactionSuccess = true;
           this.errorMessage = '';
+
+          setTimeout(() => {
+            this.transactionSuccess = false;
+          }, 2000);  // Es veura al gif per dos segons
         },
         error: (error) => {
           console.error('Error updating balance:', error);
@@ -134,6 +142,16 @@ export class SellethereumComponent {
   }
 
 
+  fetchImage() {
+    this.mediaService.getEthereumGif().subscribe({
+      next: (response: string) => {
+        this.imageURL = response;
+      },
+      error: (error) => {
+        console.error('Error fetching image:', error);
+      }
+    });
+  }
 
 
 }

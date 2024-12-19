@@ -1,58 +1,112 @@
-nav {
-  background-color: #45a049;
-  padding: 15px;
-  position: sticky;
-  top: 0;
-  z-index: 10;
+.radio-inputs {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  border-radius: 20px;
-  margin: 10px;
+  padding: 1rem 2rem;
+  background: linear-gradient(90deg, #4a90e2, #357ABD);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-size: 1rem;
+  width: 100%;
+  max-width: 1200px;
+  margin: 1rem auto;
+  box-sizing: border-box;
 }
 
-nav ul {
+.logo-container {
   display: flex;
-  justify-content: center;
   align-items: center;
-  list-style: none;
-  padding: 0;
-  margin: 0;
+  gap: 0.5rem;
 }
 
-nav ul li {
-  margin-left: 20px;
+.logo {
+  height: 55px;
+  width: auto;
 }
 
-nav ul li a {
-  text-decoration: none;
-  color: #fff;
-  font-size: 1.2rem;
+.company-title {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #ffffff;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.menu-items {
+  display: flex;
+  gap: 3rem; /* Cambiado de 1rem a 0.5rem */
+  flex: 1;
+  justify-content: flex-end;
+}
+
+.radio {
+  position: relative;
+}
+
+.radio input {
+  display: none;
+}
+
+.radio .name {
+  display: inline-block;
+  padding: 0.8rem 1.5rem;
   font-weight: 500;
-  transition: color 0.3s ease;
-  padding: 10px 15px;
-  border-radius: 10px;
+  font-size: 1rem;
+  color: #ffffff;
+  background-color: transparent;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: all 0.3s ease;
 }
 
-nav ul li a:hover {
-  color: #fff;
-  background-color: #388e3c;
+.radio .name:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.radio input:checked + .name,
+.radio .name.active {
+  color: #357ABD;
+  background-color: #ffffff;
+  font-weight: 600;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.radio input:checked + .name::after,
+.radio .name.active::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50%;
+  height: 3px;
+  background-color: #357ABD;
+  border-radius: 2px;
+  transition: all 0.3s ease-in-out;
+}
+
+.radio input:checked + .name:hover,
+.radio .name.active:hover {
+  background-color: #f4f4f4;
+  color: #357ABD;
 }
 
 @media (max-width: 768px) {
-  nav {
+  .radio-inputs {
     flex-direction: column;
     align-items: center;
   }
 
-  nav ul {
+  .menu-items {
     flex-direction: column;
-    width: 100%;
+    gap: 0.5rem;
   }
 
-  nav ul li {
-    width: 100%;
-    text-align: center;
-    margin: 5px 0;
+  .company-title {
+    font-size: 1.25rem;
+  }
+
+  .logo {
+    height: 30px;
   }
 }

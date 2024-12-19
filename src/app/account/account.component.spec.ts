@@ -20,4 +20,12 @@ describe('AccountComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should toggle showSignup', () => {
+    expect(component.showSignup).toBeFalse();
+    component.toggleSignup();
+    expect(component.showSignup).toBeTrue();
+    component.toggleSignup();
+    expect(component.showSignup).toBeFalse();
+  });
 });

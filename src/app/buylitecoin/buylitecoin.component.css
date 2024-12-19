@@ -1,6 +1,6 @@
 .container {
-  width: 80%;
-  max-width: 600px;
+  width: 400px;
+  height: 250px;
   margin: 0 auto;
   padding: 20px;
   text-align: center;
@@ -8,6 +8,7 @@
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
+
 
 h2 {
   color: #333;
@@ -33,7 +34,7 @@ input[type="number"] {
 }
 
 button {
-  background-color: #4CAF50;
+  background-color: #007BFF;
   color: #fff;
   border: none;
   padding: 10px 20px;
@@ -50,6 +51,25 @@ button:disabled {
 }
 
 button:hover:enabled {
-  background-color: #45a049;
+  background-color: #1385ff;
 }
 
+
+.transaction-success {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  text-align: center;
+}
+
+.transaction-success img {
+  width: 250px;
+  height: auto;
+}
+
+.success-message {
+  font-weight: bold;
+  background-color: #fff;
+}

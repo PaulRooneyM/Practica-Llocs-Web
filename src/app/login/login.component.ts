@@ -25,6 +25,7 @@ interface LoginUser {
 export class LoginComponent {
   private loginService = inject(LoginService);
 
+  // Definición del formulario de inicio de sesión
   loginForm = new FormGroup({
     username: new FormControl('', [Validators.required, Validators.minLength(3)]),
     password: new FormControl('', [Validators.required, Validators.minLength(3)])
@@ -32,6 +33,7 @@ export class LoginComponent {
 
   userId = signal<string | null>(null);
 
+  // Manejar el envío del formulario
   onSubmit() {
     const { username, password } = this.loginForm.value;
 
@@ -46,21 +48,21 @@ export class LoginComponent {
             this.userId.set(user._id);
             localStorage.setItem('userId', user._id);
 
-            alert('Login successful');
+            alert("Inici de sessió correcte");
 
             window.location.reload();
           } else {
-            console.error('Invalid username or password');
-            alert('Invalid username or password');
+            console.error("Nom d'usuari o contrasenya no vàlids");
+            alert("Nom d'usuari o contrasenya no vàlids");
           }
         },
         (error) => {
           console.error('Error fetching users:', error);
-          alert('An error occurred. Please try again later.');
+          alert("S'ha produït un error. Si us plau, torna-ho a provar més tard.");
         }
       );
     } else {
-      alert('Please enter both username and password.');
+      alert("Introduïu el nom d'usuari i la contrasenya.");
     }
   }
 

@@ -2,7 +2,7 @@
   <h2>Comprar Litecoin</h2>
 
   <div class="balance">
-    <p>Saldo actual fiat: <strong>{{ balance }}€</strong></p>
+    <p>Saldo actual: <strong>{{ balance }}€</strong></p>
   </div>
 
   <div class="litecoinValue">
@@ -22,4 +22,14 @@
     <button (click)="buyLitecoin()" [disabled]="amountToBuy <= 0 || amountToBuy > balance">
       Comprar Litecoin
     </button>
+
+
+    <div *ngIf="transactionSuccess" class="transaction-success">
+      <img [src]="imageURL" alt="Etherum Purchase Animation" />
+      <p class="success-message">Compra realitzada amb èxit!</p>
+    </div>
+
+    <div *ngIf="errorMessage" class="error-message">
+      <p>{{ errorMessage }}</p>
+    </div>
   </div>

@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-
 import { FormGroup } from '@angular/forms';
 import { FormControl, Validators } from '@angular/forms';
 import { SignupService } from '../services/signup.service';
+
 @Component({
   selector: 'app-signup',
   standalone: true,
@@ -16,12 +16,13 @@ import { SignupService } from '../services/signup.service';
   styleUrl: './signup.component.css'
 })
 export class SignupComponent {
+  @Output() signupSuccess = new EventEmitter<void>();
 
+  // Definición del formulario de registro
   signupForm = new FormGroup({
-    username: new FormControl('',{validators: [Validators.required, Validators.minLength(3)]}),
-    password: new FormControl('',{validators: [Validators.required, Validators.minLength(3)]})
+    username: new FormControl('', { validators: [Validators.required, Validators.minLength(3)] }),
+    password: new FormControl('', { validators: [Validators.required, Validators.minLength(3)] })
   });
-
 
   constructor(private signupService: SignupService) {}
 
@@ -34,22 +35,20 @@ export class SignupComponent {
       this.signupService.signup(username, password).subscribe(
         (response) => {
           console.log(response);
-          alert(`You signed up!`);
+          alert("T'has registrat correctament!");
+          this.signupSuccess.emit(); // Emitir evento de éxito
         },
         (error) => {
           console.error('Signup failed:', error);
           if (error.status === 409) {
-            alert('Username already exists. Please choose another one.');
+            alert("El nom d'usuari ja existeix. Si us plau, trieu-ne un altre.");
           } else {
-            alert('An error occurred during signup. Please try again.');
+            alert("S'ha produït un error durant la inscripció. Si us plau, torna-ho a provar.");
           }
         }
       );
     } else {
-      console.error('Username or password is missing');
+      console.error("Falta el nom d'usuari o la contrasenya");
     }
-    window.location.reload();
-
   }
-
 }

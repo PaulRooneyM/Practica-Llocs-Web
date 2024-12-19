@@ -2,11 +2,12 @@ import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { WalletService } from '../services/wallet.service';
 import { CryptoWalletService } from '../services/cyrptowallet.service';
-
+import { CommonModule } from '@angular/common';
+import { MediaService } from '../services/media.service';
 @Component({
   selector: 'app-buybitcoin',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './buybitcoin.component.html',
   styleUrl: './buybitcoin.component.css'
 })
@@ -16,6 +17,7 @@ export class BuybitcoinComponent {
   bitcoinAmount: number = 0;
   errorMessage: string = '';
   transactionSuccess: boolean = false;
+  imageURL: string = '';
 
   balance = 0;
   userId: string | null = null;
@@ -23,35 +25,36 @@ export class BuybitcoinComponent {
 
   private walletService = inject(WalletService);
   private cryptoWalletService = inject(CryptoWalletService);
+  private mediaService = inject(MediaService);
 
   constructor() {}
 
   ngOnInit() {
-    // Retrieve the user ID from localStorage
-    this.userId = localStorage.getItem('userId');
 
-    // If there's a valid userId, start fetching the balance every second
+    this.userId = localStorage.getItem('userId');
+    this.fetchImage();
+
     if (this.userId) {
       this.intervalId = setInterval(() => {
         this.fetchBalance();
         this.fetchBitcoinBalance();
-      }, 1000);  // Fetch balance every second (1000ms)
+      }, 1000);
     }
   }
 
 
   fetchBalance() {
-    // Check if userId is valid
+
     if (!this.userId) {
       console.error('User ID is not available');
       return;
     }
 
-    // Call walletService to fetch the balance using userId
+
     this.walletService.getBalance(this.userId).subscribe(
       (response: number) => {
-        // Assuming response contains the balance
-        this.balance = parseFloat(response.toFixed(2));  // Update the balance with max 2 decimals
+
+        this.balance = parseFloat(response.toFixed(2));
       },
       (error) => {
         console.error('Error fetching balance:', error);
@@ -61,17 +64,16 @@ export class BuybitcoinComponent {
 
 
   fetchBitcoinBalance() {
-    // Check if userId is valid
+
     if (!this.userId) {
       console.error('User ID is not available');
       return;
     }
 
-    // Call walletService to fetch the balance using userId
+
     this.cryptoWalletService.getBitcoinPrice().subscribe(
       (response: number) => {
-        // Assuming response contains the balance
-        this.bitcoinPrice = response;  // Update the balance
+        this.bitcoinPrice = response;
       },
       (error) => {
         console.error('Error fetching balance:', error);
@@ -89,14 +91,16 @@ export class BuybitcoinComponent {
 
     this.bitcoinAmount = this.amountToBuy / this.bitcoinPrice;
 
-
-
     this.balance -= this.amountToBuy;
     if (this.userId) {
       this.walletService.updateBalance(this.userId, this.balance).subscribe({
         next: (response) => {
           this.transactionSuccess = true;
           this.errorMessage = '';
+
+          setTimeout(() => {
+            this.transactionSuccess = false;
+          }, 2000);  // Es veura al gif per dos segons
         },
         error: (error) => {
           console.error('Error updating balance:', error);
@@ -105,6 +109,7 @@ export class BuybitcoinComponent {
         }
       });
     }
+
 
     this.userId = localStorage.getItem('userId');
 
@@ -129,4 +134,16 @@ export class BuybitcoinComponent {
     this.errorMessage = '';
     this.transactionSuccess = true;
   }
+
+  fetchImage() {
+    this.mediaService.getBitcoinGif().subscribe({
+      next: (response: string) => {
+        this.imageURL = response;
+      },
+      error: (error) => {
+        console.error('Error fetching image:', error);
+      }
+    });
+  }
+
 }

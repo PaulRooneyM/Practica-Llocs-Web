@@ -17,4 +17,15 @@ export class NewsService {
     return this.httpClient.get<any>(this.baseUrl);
   }
 
+  addNews(news: any): Observable<any> {
+    return this.httpClient.post<any>(this.baseUrl, news);
+  }
+
+  updateNews(news: any): Observable<any> {
+    return this.httpClient.put<any>(`${this.baseUrl}/${news._id}`, news);
+  }
+
+  deleteNews(newsId: string): Observable<any> {
+    return this.httpClient.delete<any>(`${this.baseUrl}/${newsId}`);
+  }
 }

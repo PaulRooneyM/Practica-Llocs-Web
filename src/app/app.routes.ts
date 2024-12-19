@@ -19,7 +19,7 @@ export const routes: Routes = [
   {
     path:'ultimesnoticies',
     component: NewsComponent,
-    title: 'Ultimesnoticies'
+    title: 'Últimes noticies'
   },
   {
     path:'compte',

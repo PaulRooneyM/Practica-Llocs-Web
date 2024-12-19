@@ -15,7 +15,6 @@
       type="number"
       id="amount"
       [(ngModel)]="amountToSell"
-      [min]="1"
       [max]="bitcoinAmount"
       placeholder="Quantitat en BTC"
       required />
@@ -27,7 +26,7 @@
 
   <div *ngIf="transactionSuccess" class="transaction-success">
     <img [src]="imageURL" alt="Bitcoin Purchase Animation" />
-    <p>Venta realitzada amb èxit!</p>
+    <p class="success-message">Venta realitzada amb èxit!</p>
   </div>
 
   <div *ngIf="errorMessage" class="error-message">

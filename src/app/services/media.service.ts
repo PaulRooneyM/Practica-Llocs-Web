@@ -18,5 +18,12 @@ export class MediaService {
   return this.http.get<any>(`${this.baseUrl}/bitcoin`);
   }
 
+  getEthereumGif(): Observable<any> {
+  return this.http.get<any>(`${this.baseUrl}/ethereum`);
+  }
+
+  getLitecoinGif(): Observable<any> {
+  return this.http.get<any>(`${this.baseUrl}/litecoin`);
+  }
 
 }

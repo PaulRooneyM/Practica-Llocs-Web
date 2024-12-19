@@ -10,6 +10,7 @@ import { CryptoWalletService } from '../services/cyrptowallet.service';
   styleUrl: './wallet.component.css'
 })
 export class WalletComponent {
+  // Variables de estado
   balance = 0;
   userId: string | null = null;
   bitcoinAmount: number = 0;
@@ -24,11 +25,14 @@ export class WalletComponent {
   totalNetWorth: number = 0;
   private intervalId: any;
 
+  // Inyección de servicios
   private walletService = inject(WalletService);
   private cryptoWalletService = inject(CryptoWalletService);
 
   ngOnInit() {
     this.userId = localStorage.getItem('userId');
+    this.showLoadingBar();
+    setTimeout(() => this.hideLoadingBar(), 150);
 
     if (this.userId) {
       this.intervalId = setInterval(() => {
@@ -44,6 +48,25 @@ export class WalletComponent {
     }
   }
 
+  // Mostrar barra de carga
+  showLoadingBar() {
+    const loader = document.querySelector('.loader') as HTMLElement;
+    if (loader) {
+      loader.style.display = 'block';
+    }
+  }
+
+  // Ocultar barra de carga
+  hideLoadingBar() {
+    const loader = document.querySelector('.loader') as HTMLElement;
+    const container = document.querySelector('.crypto-container') as HTMLElement;
+    if (loader && container) {
+      loader.style.display = 'none';
+      container.style.display = 'block';
+    }
+  }
+
+  // Obtener balance del usuario
   fetchBalance() {
     if (!this.userId) {
       console.error('User ID is not available');
@@ -60,6 +83,7 @@ export class WalletComponent {
     );
   }
 
+  // Obtener valor del Bitcoin
   fetchBitcoinValue() {
     this.cryptoWalletService.getBitcoinPrice().subscribe(
       (response: number) => {
@@ -71,6 +95,7 @@ export class WalletComponent {
     );
   }
 
+  // Obtener valor del Ethereum
   fetchEthereumValue() {
     this.cryptoWalletService.getEthereumPrice().subscribe(
       (response: number) => {
@@ -82,6 +107,7 @@ export class WalletComponent {
     );
   }
 
+  // Obtener valor del Litecoin
   fetchLitecoinValue() {
     this.cryptoWalletService.getLitecoinPrice().subscribe(
       (response: number) => {
@@ -93,6 +119,7 @@ export class WalletComponent {
     );
   }
 
+  // Obtener cantidad de Bitcoin del usuario
   fetchBitcoinAmount() {
     if (!this.userId) {
       console.error('User ID is not available');
@@ -110,6 +137,7 @@ export class WalletComponent {
     this.userBitcoinValue = parseFloat((this.bitcoinAmount * this.bitcoinValue).toFixed(2));
   }
 
+  // Obtener cantidad de Ethereum del usuario
   fetchEthereumAmount() {
     if (!this.userId) {
       console.error('User ID is not available');
@@ -127,6 +155,7 @@ export class WalletComponent {
     this.userEthereumValue = parseFloat((this.ethereumAmount * this.ethereumValue).toFixed(2));
   }
 
+  // Obtener cantidad de Litecoin del usuario
   fetchLitecoinAmount() {
     if (!this.userId) {
       console.error('User ID is not available');
@@ -144,21 +173,27 @@ export class WalletComponent {
     this.userLitecoinValue = parseFloat((this.litecoinAmount * this.litecoinValue).toFixed(2));
   }
 
+  // Calcular el valor neto total del usuario
   calculateNetWorth() {
-    this.totalNetWorth = parseFloat((this.balance + this.userBitcoinValue + this.userEthereumValue + this.userLitecoinValue).toFixed(2));
+    this.totalNetWorth = parseFloat((this.balance + this.userBitcoinValue + this.userEthereumValue+ this.userLitecoinValue).toFixed(2));
   }
 
-
+  // El formulari de depositar o retirar diners
   onSubmit(event: any) {
     const transactionType = event.target.querySelector('#transactionType').value;
     const amount = parseFloat(event.target.querySelector('#amount').value);
 
-    if (transactionType === 'deposit') {
+    const confirmation = confirm(`Esteu segur que voleu fer l'operació de ${transactionType} per un valor de ${amount} €?`);
+    if (!confirmation) {
+      return false;
+    }
+
+    if (transactionType === 'dipositar') {
       this.balance += amount;
       if (this.userId) {
         this.walletService.updateBalance(this.userId, this.balance).subscribe(
           (response) => {
-            alert(`Deposited: $${amount}`);
+            alert(`Dipositat: $${amount}`);
           },
           (error) => {
             console.error('Error updating balance:', error);
@@ -168,14 +203,14 @@ export class WalletComponent {
       }
 
 
-    } else if (transactionType === 'withdraw') {
+    } else if (transactionType === 'retirar') {
       if (amount <= this.balance) {
         this.balance -= amount;
-        // Update balance on the server
+        // Actualizar balance en el servidor
         if (this.userId) {
           this.walletService.updateBalance(this.userId, this.balance).subscribe(
             (response) => {
-              alert(`Withdrawn: $${amount}`);
+              alert(`Retirat: $${amount}`);
             },
             (error) => {
               console.error('Error updating balance:', error);
@@ -184,7 +219,7 @@ export class WalletComponent {
           );
         }
       } else {
-        alert('You do not have sufficient balance.');
+        alert('No tens prou saldo.');
       }
     }
     return false;

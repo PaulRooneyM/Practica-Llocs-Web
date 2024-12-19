@@ -2,11 +2,13 @@ import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { WalletService } from '../services/wallet.service';
 import { CryptoWalletService } from '../services/cyrptowallet.service';
+import { MediaService } from '../services/media.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-buylitecoin',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './buylitecoin.component.html',
   styleUrl: './buylitecoin.component.css'
 })
@@ -17,6 +19,7 @@ export class BuylitecoinComponent {
   litecoinAmount: number = 0;
   errorMessage: string = '';
   transactionSuccess: boolean = false;
+  imageURL: string = '';
 
 
   balance = 0;
@@ -25,36 +28,35 @@ export class BuylitecoinComponent {
 
   private walletService = inject(WalletService);
   private cryptoWalletService = inject(CryptoWalletService);
+  private mediaService = inject(MediaService);
 
   constructor() {}
 
 
   ngOnInit() {
-    // Retrieve the user ID from localStorage
+
     this.userId = localStorage.getItem('userId');
 
-    // If there's a valid userId, start fetching the balance every second
+    this.fetchImage();
     if (this.userId) {
       this.intervalId = setInterval(() => {
         this.fetchBalance();
         this.fetchLitecoinBalance();
-      }, 1000);  // Fetch balance every second (1000ms)
+      }, 1000);
     }
   }
 
-
+  // Obtener balance del usuario
   fetchBalance() {
-    // Check if userId is valid
     if (!this.userId) {
       console.error('User ID is not available');
       return;
     }
 
-    // Call walletService to fetch the balance using userId
+
     this.walletService.getBalance(this.userId).subscribe(
       (response: number) => {
-        // Assuming response contains the balance
-        this.balance = parseFloat(response.toFixed(2));  // Update the balance with max 2 decimals
+        this.balance = parseFloat(response.toFixed(2));
       },
       (error) => {
         console.error('Error fetching balance:', error);
@@ -62,18 +64,16 @@ export class BuylitecoinComponent {
     );
   }
 
+  // Obtener balance de Litecoin
   fetchLitecoinBalance() {
-    // Check if userId is valid
     if (!this.userId) {
       console.error('User ID is not available');
       return;
     }
 
-    // Call cryptoWalletService to fetch the litecoin balance using userId
     this.cryptoWalletService.getLitecoinPrice().subscribe(
       (response: number) => {
-        // Assuming response contains the litecoin balance
-        this.litecoinPrice = parseFloat(response.toFixed(6));  // Update the litecoin balance with max 8 decimals
+        this.litecoinPrice = parseFloat(response.toFixed(6));
       },
       (error) => {
         console.error('Error fetching litecoin balance:', error);
@@ -81,7 +81,7 @@ export class BuylitecoinComponent {
     );
   }
 
-
+  // Comprar Litecoin
   buyLitecoin() {
     if (this.amountToBuy <= 0 || this.amountToBuy > this.balance) {
       this.errorMessage = "No tens prou saldo per comprar aquesta quantitat.";
@@ -115,6 +115,11 @@ export class BuylitecoinComponent {
         next: (response) => {
           this.transactionSuccess = true;
           this.errorMessage = '';
+
+
+          setTimeout(() => {
+            this.transactionSuccess = false;
+          }, 2000);  // Es veura al gif per dos segons
         },
         error: (error) => {
           console.error('Error updating balance:', error);
@@ -133,6 +138,16 @@ export class BuylitecoinComponent {
 
   }
 
+  fetchImage() {
+    this.mediaService.getLitecoinGif().subscribe({
+      next: (response: string) => {
+        this.imageURL = response;
+      },
+      error: (error) => {
+        console.error('Error fetching image:', error);
+      }
+    });
+  }
 
 
 }

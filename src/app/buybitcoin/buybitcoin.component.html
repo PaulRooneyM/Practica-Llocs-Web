@@ -2,7 +2,7 @@
   <h2>Comprar Bitcoin</h2>
 
   <div class="balance">
-    <p>Saldo actual fiat: <strong>{{ balance }}€</strong></p>
+    <p>Saldo actual: <strong>{{ balance }}€</strong></p>
   </div>
 
 
@@ -24,5 +24,15 @@
       Comprar Bitcoin
     </button>
   </div>
+
+  <div *ngIf="transactionSuccess" class="transaction-success">
+    <img [src]="imageURL" alt="Bitcoin Purchase Animation" />
+    <p class="success-message">Compra realitzada amb èxit!</p>
+  </div>
+
+  <div *ngIf="errorMessage" class="error-message">
+    <p>{{ errorMessage }}</p>
+  </div>
+
 </div>
 
