@@ -188,7 +188,7 @@ export class WalletComponent {
       return false;
     }
 
-    if (transactionType === 'dipositar') {
+    if (transactionType === 'depositar') {
       this.balance += amount;
       if (this.userId) {
         this.walletService.updateBalance(this.userId, this.balance).subscribe(
